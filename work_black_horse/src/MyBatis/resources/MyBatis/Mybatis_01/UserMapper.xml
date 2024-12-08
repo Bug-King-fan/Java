@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--利用命名空间进行映射关联-->
+<mapper namespace="MyBatis.Mybatis_01.UserMapper">
+
+    <!--编写SQL查询语句 不用加;  resultType代表查询结果映射到User类-->
+    <select id="findAll" resultType="MyBatis.Mybatis_01.User">
+        select * from user
+    </select>
+
+<!-- <select id="findId" parameterType="int" resultType="MyBatis.Mybatis_01.User">
+        select * from user where id = #{id}
+    </select>   -->
+
+</mapper>

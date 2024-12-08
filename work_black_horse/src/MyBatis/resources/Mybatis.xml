@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--根元素-->
+<configuration>
+<!--    <properties resource="PropertiesPath"></properties>-->
+<!--    <settings><setting name="mapUnderscoreToCamelCase" value="true"/></settings>-->
+<!--
+<typeAliases>
+        <package name="MyBatis/Mybatis_01"/>
+        ....
+</typeAliases>
+-->
+    <!--环境不用管-->
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理器，按照jdbc的事务管理机制-->
+            <transactionManager type="JDBC"/>
+            <!--POOLED是Mybatis自带的数据库连接池,学完SSM后可以换成 Druid等-->
+            <dataSource type="POOLED">
+                <!--数据库配置 更改-->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/frank_sql"/>
+                <property name="username" value="root"/>
+                <property name="password" value="frankwu"/>
+
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--配置映射文件[接口]关联-->
+    <mappers>
+<!--        <package name="MyBatis.Mybatis_01"/>-->
+        <mapper resource="MyBatis/resources/MyBatis/Mybatis_01/UserMapper.xml"/>
+    </mappers>
+</configuration>

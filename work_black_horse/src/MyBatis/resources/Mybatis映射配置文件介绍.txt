@@ -1,0 +1,129 @@
+占位符换成名称参数：
+    ? -> #{name}
+
+#{}和${}的区别
+    ${}：[会有sql注入风险不建议用]在核心配置文件中获取外部配置文件数据;
+         在映射文件[接口文件]中作为sql的占位符参数使用(注意需要使用@param("参数")声明参数名)
+         public User getUser(@Param("name") String name);
+    #{}： [防止SQL注入]
+
+当接口方法参数有多个时，要使用@Param注解，@Param注解的value值必须和select中生命的占位符相同
+
+1、select标签：编写select代码
+    属性：
+        id：sql语句唯一标识，与mapper接口方法名一致
+        parameterType：入参类型
+        resultType/resultMap：返回值类型
+    下属标签：[动态标签]
+        if标签：
+            <if test(条件) = " brandName!=null">
+                and brand_name = #{brandName}
+            </if>
+
+        where标签：where标签可以替换where关键字，自动去除sql语句中where条件里多余的or和and语句
+            <where>
+                <if></if>
+            </where>
+
+        choose标签：从多个条件选择一个执行,放在<where>中
+            <choose>
+                <when test="status!=null">
+                    status=#{status}
+                </when>
+                <when test="status!= null and companyName!=null" >
+                    status=#{status} and company_name=#{companyName}
+                </when>
+                <otherwise>
+                    1=1 #default
+                </otherwise>
+            </choose>
+
+        set标签：设置参数 代替set关键字,同时自动移除sql中多余的逗号
+            <set>
+                <if test=" ... ">
+                     brand_name = #{brandName},
+                </if>
+                if test=" ... ">
+                     brand_name = #{brandName},
+                </if>
+            </set>
+
+        foreach标签：循环
+            属性: collection[要被 foreach 标签循环解析的对象。]
+                 item[集合中元素迭代时的别名]
+                 index[在list和数组中，index是元素的序号；在map中，index是元素的 key]
+                 separator[元素之间的分隔符，例如在 in() 的时候，separator=“,” ]
+                 open,close[foreach 标签的开始结束标签 ，主要用于in()]
+            <foreach collection="id_list" item="id" separator="," open="(" close=")">
+                #{id}
+            </foreach>
+
+2、insert标签：编写insert代码
+    属性：
+        id：sql语句唯一标识，与mapper接口方法名一致
+        parameterType：入参类型  #后内容必须同数据库和User类
+    <insert id="addUser" parameterType="User">
+        insert into user(name,age) values(#{name},#{age})
+    </insert>
+
+    扩展：主键回填（在项目表中插入一行记录后，自动把当前行的主键列下的数值返回）
+        在insert属性中，添加useGeneratedKeys="true"[开启主键回填] keyProperty="id"[回填,填充到调用对象的属性值]
+        orderMapper.addOrder(Order); 主键填充到order的id成员内
+
+3、delete标签：编写delete代码
+    属性：
+        id：sql语句唯一标识，与mapper接口方法名一致
+        parameterType：入参类型  #后内容必须同数据库和User类
+    <delete id="updateUser" parameterType="User">
+                delete from user where id=#{id}
+    </delete>
+4、update标签：编写update代码
+    属性：
+        id：sql语句唯一标识，与mapper接口方法名一致
+        parameterType：入参类型  #后内容必须同数据库和User类
+    <update id="updateUser" parameterType="User">
+            update user set username=#{username} where id=#{id}
+    </update>
+
+
+5、ResultMap标签：结果集映射标签 用于多表查询和字段名和属性名不一致的问题
+    属性：
+        id：配置主键字段和实体类的属性映射[同select标签的resultMap属性]
+        type：绑定关联实体类
+        autoMapping：自动映射 [="true"]  名字一样的自动配置
+    内部标签：
+        id：配置主键字段和实体类的属性映射
+            属性：column   property
+        result：配置非主键字段和实体类的属性映射
+            属性：column   property
+        association：配置关联关系[用于一对一查询映射]
+            属性：property="主表实体中对应从表的成员属性名"
+                 javaType="从表实体类型"
+                 autoMapping="true"
+                 //注意返回Order类，但Order下有User类的成员orderUser
+            <association property="orderUser" javaType="Mybatis.Mybatis_01.orderUser" autoMapping="true">
+                <添加从表中字段与实体属性的映射关系> User类的各成员属性
+                <id column=... property=...></id>
+            </association>
+
+        collection：配置关联关系[用于一对多查询映射]
+            属性：property="主表实体中对应从表的成员属性名"
+                 javaType="集合类型"
+                 ofType="集合中元素类型"
+                 autoMapping="true"
+            <collection property="orders" javaType="java.util.List" ofType="Mybatis.Mybatis_01.Order" autoMapping="true">
+                 <添加从表中字段与实体属性的映射关系> User类的各成员属性
+                 <id column=... property=...></id>
+            </collection>
+
+
+    用法： 结合select使用，返回属性类使用resultMap
+{
+    <resultMap>
+        <id column="brandID(别名)" property="id(实体类属性)"></id>
+        <result column="brand_name(别名)" property="brandName(实体类属性)"> </result>
+    </resultMap>
+    <select id="getUser" resultMap="User">
+        select id as brandID brand_name from user
+    </select>
+}

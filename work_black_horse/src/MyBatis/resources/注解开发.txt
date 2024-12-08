@@ -1,0 +1,24 @@
+在接口方法上添加注解
+
+1、@insert(sql语句)
+
+2、@select(sql语句)
+
+3、@update(sql语句)
+
+4、@delete(sql语句)
+
+5、主键回填
+   @Options(useGeneratedKeys = true , keyColumn(表里字段名)="id" , keyProperty(实体属性名) = "id")
+
+6、Results结果集映射
+@Results(id="userMap",
+            value={
+                    @Result(column="id",property="id",id=true[代表主键]),
+                    @Result(column="name",property="name"),
+                    @Result(column="age",property="age")
+                    }
+            )
+
+7、对于模糊查询，可以使用concat()去拼接like
+  @select("select * from user where name like concat('%',#{name},'%')")

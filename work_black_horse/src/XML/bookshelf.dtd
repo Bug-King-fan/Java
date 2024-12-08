@@ -1,0 +1,9 @@
+<!ELEMENT 书架 (书+)>
+<!--声明了根元素，并指定根元素下必须有一个元素-->
+<!ELEMENT 书 (书名, 作者, 价格)>
+<!--约束元素书的子元素必须为这三个-->
+
+        <!ELEMENT 书名 (#PCDATA)>
+<!--#PCDATA代表书名下是文本内用-->
+        <!ELEMENT 作者 (#PCDATA)>
+        <!ELEMENT 价格 (#PCDATA)>

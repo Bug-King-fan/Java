@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="https://www.itcast.cn"
+            elementFormDefault="qualified">
+    <!--设置根元素-->
+    <xs:element name="书架">
+        <xs:complexType>
+<!--maxOccurs="unbounded"表示出现次数无限制-->
+            <xs:sequence maxOccurs="unbounded">
+<!-- 序列标签 表示按照顺序-->
+                 <xs:element name="书">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <!--type声明类型-->
+                            <xs:element name="书名" type='xs:string'/>
+                            <xs:element name="作者" type='xs:string'/>
+                            <xs:element name="价格" type='xs:int'/>
+                        </xs:sequence>
+                    </xs:complexType>
+                 </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>
+<!--
+xs可以省略
+<schema xmlns:xs=固定路径
+        targetNamespace="作用的路径"
+        elementFormDefault="qualified/unqualified">
+        当取值为qualified时，xml元素前必须有命名空间作为前缀； <power:title>test</power:title>
+        当取值为unqualified时，xml元素前可以没有命名空间作为前缀。<title>test</title>
+</schema>
+
+schema将约束分为两种：
+    <complexType>复杂元素：带有子元素
+    简单元素：没有子元素，只有文本
+
+命名空间：xmlns:aa="xxxxxx"
+
+-->
+

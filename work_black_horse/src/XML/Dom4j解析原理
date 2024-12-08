@@ -1,0 +1,2 @@
+原理：
+    将XML文件加载到内存，生成一颗DOM树，并获取Document对象，通过Document对象对DOM树操作

@@ -1,0 +1,41 @@
+XML元素：
+格式1：<person> 标签体 </person> 双标签
+格式2：</person> 单标签（空标签）
+
+转义字符：
+<  &lt;
+>  &gt;
+&  &amp;
+"  &quot;
+'  &apos;
+
+字符区：【出现大量转义字符时使用】[快捷方式CD]
+<![CDATA[文本]]>
+如：<![CDATA[if salary < 1000 then]]>
+
+元素体：
+<person id = "1" id2="2">
+    标签中可以包含其他标签
+    <name>张三</name>
+</person>
+
+XML中有且仅有一个根标签：
+<persons>
+    <person id ="1">
+        标签中可以包含其他标签
+        <name>张三</name>
+    </person>
+    <person id ="2">
+        标签中可以包含其他标签
+        <name>李四</name>
+    </person>
+</persons>
+
+XML约束：
+    DTD约束[需要创建约束文档 xxx.dtd] [无法约束元素数值类型]
+        在XML文件中，声明：<!DOCTYPE 书架 SYSTEM "bookshelf.dtd">
+    Schema约束[需要创建约束文档 xxx.xsd][可以约束元素数值类型]
+        在XML文件中，声明：<书架 xmlns="xsd中targetNamespace的内容"
+                              xmlns:xsi="http://www.w3.org/2001/XMLSchema"
+                              xsi:schemaLocation="targetNamespace内容 文件名[bookshe.xsd]">
+

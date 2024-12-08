@@ -1,0 +1,31 @@
+
+Mybatis默认手动事务！！！需要手动提交或回滚
+
+1、properties标签：加载外部的资源配制文件
+    properties标签必需在configuration标签下面第一层！！！
+    可以简化内部property标签，将其提取到properties文件中. property的value改为"${driver}.."
+
+2、settings标签：改变Mybatis的运行行为
+    settings标签必需在configuration标签下面第二层
+    开启驼峰映射：mapUnderscoreToCamelCase 将下划线转换为驼峰
+    <settings><setting name="mapUnderscoreToCamelCase" value="true"/></settings>
+
+3、typeAliases标签：定义别名
+    typeAliases标签必需在configuration标签下面第三层
+    <typeAliases>
+        将这个包下所有类都起了别名
+        <package name="MyBatis/Mybatis_01"/>
+        ....
+    </typeAliases>
+
+4、typeHandlers标签：定义类型处理器 [了解]
+    解决java与数据库类型不兼容问题：varchar-》String
+
+5、mappers标签：映射器,定义Mapper
+    加载XML文件和接口
+    <mappers>
+       <mapper resource="MyBatis/resources/MyBatis/Mybatis_01/UserMapper.xml"/>
+       ....
+       <package name="接口目录"> ---批量加载 尽量使用
+    </mappers>
+

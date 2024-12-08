@@ -1,0 +1,50 @@
+1、下载maven-bin文件
+2、解压，并配置环境变量，cmd执行mvn命令成功
+3、创建repository文件
+4、修改setting文件中 <mirrors>
+
+<!-- 	阿里云中央仓库镜像地址	 -->
+	<mirror>
+          <id>aliyun_maven</id>
+          <mirrorOf>*</mirrorOf>
+          <name>ALiYun_Maven</name>
+          <url>https://maven.aliyun.com/repository/public</url>
+    </mirror>
+
+5、修改setting文件  添加<localRepository> 本例仓库路径
+<localRepository>E:\\Maven\\apache-maven-3.9.9-bin\\apache-maven-3.9.9\\repository</localRepository>
+
+6、在IDEA中-》设置-》构建-》构造工具-》Maven{
+    1、maven目录
+    2、settings.xml
+    3、repository目录
+}
+
+
+使用：
+    1、MAVEN坐标资源[资源的唯一标识]
+    2、依赖:通过坐标引入依赖
+    Maven坐标组成：
+        <groupId>com.frank</groupId>  组织名[自己的]
+        <artifactId>mysql-connector-java</artifactId>  作用的项目名
+        <version>5.1.47</version>  版本 [如果没有回去mirror中下载]
+
+创建Maven项目：
+    1、创建项目是选择Maven项目，下一步
+    2、填写坐标信息,完成
+    3、修改pom.xml 填写依赖管理  [快速办法 alt+insert 选择dependency  搜索需要用的依赖，在添加]
+        <dependencies>
+
+           例如依赖junit
+           <groupId>junit</groupId>
+           <artifactId>junit</artifactId>
+           <version>4.13.2</version>
+
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>2.1.4</version>
+
+        </dependencies>
+
+
+注意：Maven项目源代码和测试代码分开放
